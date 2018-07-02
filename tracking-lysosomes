@@ -180,9 +180,9 @@ delp_off=zeros(1,numel(tracks{s}(:, 2)));
             delp_off(kv)=track_vector{s}(kv,:)*(fit_vector_norm{s}(kv,:)*[0,1;-1,0])';
         end
         position{s}=cumsum(delp); % displacement of the particle, should look like kymograph
-        position{s}=sgolayfilt(position{s},1,n_frames); % smooth the kymograph track so less noise, 1st order, smoothing over 5 frames
+        position_smooth{s}=sgolayfilt(position{s},1,n_frames); % smooth the kymograph track so less noise, 1st order, smoothing over 5 frames
         position_off{s}=cumsum(delp_off);
-        diff_position{s}=diff(position{s});
+        diff_position{s}=diff(position_smooth{s});
         diff_position{s}(isnan(diff_position{s})) = [];
         abs_diff_position{s} = abs(diff_position{s});
         
@@ -191,7 +191,6 @@ delp_off=zeros(1,numel(tracks{s}(:, 2)));
         cum_binding_time(s) = numel(diff_position{s})*exposure;   % of the whole track
         
         % Run between reversals
-        position_smooth{s} = position{s};
         delp_smooth{s} = diff(position_smooth{s});
         delp1{s}=delp_smooth{s}(1:(end-1));  %First value to the second last value
         delp2{s}=delp_smooth{s}(2:end);  %Second value to the last value
