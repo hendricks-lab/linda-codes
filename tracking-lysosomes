@@ -202,7 +202,7 @@ delp_off=zeros(1,numel(tracks{s}(:, 2)));
         jrev{s} = jrev_all{s}(j_rev_keep{s});  % the value at those indices above
         
         jkr{s} = [1, jrev{s}, numel(tracks{s}(:, 2))];
-        pos_rev{s} = position{s}(jkr{s});
+        pos_rev{s} = position_smooth{s}(jkr{s});
         run_bw_reversal{s} = diff(pos_rev{s});       % runs between reversals for each track
         
         time = tracks{s}(:, 1);
